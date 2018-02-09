@@ -1,61 +1,221 @@
 
 <!doctype html>
 <html class="no-js" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivia Game</title>
-    <link rel="shortcut icon" href="./assets/images/game-favicon.png">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planetary Trivia!</title>
+  <link rel="shortcut icon" href="./assets/images/game-favicon.png">
 
-    <!-- Compressed CSS -->
-    <link 
-      rel="stylesheet" 
-      href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css" 
-      crossorigin="anonymous"
-    > <!-- integrity="sha256-itWEYdFWzZPBG78bJOOiQIn06QCgN/F0wMDcC4nOhxY="  -->
+  <!-- Compressed CSS -->
+  <link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css" 
+    crossorigin="anonymous"
+  >
 
-    <link rel="stylesheet" href="assets/css/style.css">
-  </head>
-  <body>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
 
-    <div class="text-center">
-      <a href="https://github.com/BenRGarcia/Star-Wars-RPG" target="_blank">View Source Code</a>
+  <div class="grid-container">
+
+    <div class="grid-x grid-padding-x grid-padding-y">
+      <!-- View Source Code Link -->
+      <div class="cell">
+        <a href="https://github.com/BenRGarcia/Star-Wars-RPG" target="_blank">View Source Code</a>
+      </div>
+      <!-- Page Title -->
+      <div class="cell">
+        <h1 class="title">Planetary Trivia!</h1>
+      </div>
     </div>
 
-    <!-- =================== -->
-    <!-- All code BELOW here -->
-    <!-- =================== -->
+    <div class="cell text-center">
+      Static header
+      <hr>
+    </div>
 
 
+    <!-- ========================================================== -->
+    <!-- ========================================================== -->
+    <!-- Dynamic Content will .append() and .empty()/.remove() here -->
+    <div id="js-page-content" class="grid-x grid-padding-x grid-padding-y">
+    <!-- ========================================================== -->
+    <!-- ========================================================== -->
 
 
+      <!-- =========================== -->
+      <!-- First View, when page loads -->
+      <!-- =========================== -->
+      <!-- Component #1, 'START' button -->
+      <div id="js-component-start" class="cell">
+        <button id="js-start-button" class="button large alert">START</button>
+      </div> 
+      <!-- Component #1 -->
+      <!-- =========================== -->
+      <!-- First View, when page loads -->
+      <!-- =========================== -->
 
-    
+
+      <div class="cell text-center">
+        View #1, when page first loads
+        <hr>
+      </div>
 
 
+      <!-- ======================================= -->
+      <!-- Second View, when player asked question -->
+      <!-- ======================================= -->
+      <!-- Component #2, 'TIMER' -->
+      <div id="js-component-timer" class="cell shrink content output">
+        <h3>Time Remaining: <span id="js-time-remaining">30</span></h3>
+      </div> 
+      <!-- Component #2 -->
+
+      <!-- Component #3, 'TRIVIA QUESTION' -->
+      <div id="js-component-question" class="cell content">
+        <h2>In what month is the Earth closest to the sun?</h2>
+      </div> 
+      <!-- Component #3 -->
+
+      <!-- Component #4, 'TRIVIA ANSWERS' -->
+      <div id="js-component-answers" class="cell content shrink output">
+        <h4 id="js-choice-1" class="choices">January</h4>
+        <h4 id="js-choice-2" class="choices">April</h4>
+        <h4 id="js-choice-3" class="choices">July</h4>
+        <h4 id="js-choice-4" class="choices">October</h4>
+      </div> 
+      <!-- Component #4 -->
+      <!-- ======================================= -->
+      <!-- Second View, when player asked question -->
+      <!-- ======================================= -->
 
 
+      <div class="cell text-center">
+        View #2, when player is to choose answer
+        <hr>
+      </div>
 
 
-    <!-- =================== -->
-    <!-- All code ABOVE here -->
-    <!-- =================== -->
+      <!-- ===================================== -->
+      <!-- Third View, when player guessed wrong -->
+      <!-- ===================================== -->
+      <!-- Component #2, 'TIMER' -->
+      <div id="js-component-timer" class="cell shrink content output">
+        <h3>Time Remaining: <span id="js-time-remaining">30</span></h3>
+      </div> 
+      <!-- Component #2 -->
 
-    <!-- jQuery -->
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous">
-    </script>
+      <!-- Component #3, 'TRIVIA QUESTION' -->
+      <div id="js-component-question" class="cell content">
+        <h2>In what month is the Earth closest to the sun?</h2>
+      </div> 
+      <!-- Component #3 -->
 
-    <!-- Foundation JavaScript -->
-    <script 
-      src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js" 
-      crossorigin="anonymous">
-    </script> <!-- integrity="sha256-Nd2xznOkrE9HkrAMi4xWy/hXkQraXioBg9iYsBrcFrs="  -->
+      <!-- Component #5, 'INCORRECT RESPONSE' -->
+      <div id="js-component-incorrect" class="cell content shrink output">
+        <h4>NOPE!</h4>
+        <h4>The correct answer was:</h4>
+        <h4>January</h4>
+        <img src="./assets/images/sad-earth.gif">
+      </div> 
+      <!-- Component #5 -->
+      <!-- ===================================== -->
+      <!-- Third View, when player guessed wrong -->
+      <!-- ===================================== -->
 
-    <!-- Custom JS -->
-    <script src="assets/javascript/app.js"></script>
-  </body>
+
+      <div class="cell text-center">
+        View #3, if player guessed wrong
+        <hr>
+      </div>
+
+
+      <!-- ===================================== -->
+      <!-- Forth View, when player guessed right -->
+      <!-- ===================================== -->
+      <!-- Component #2, 'TIMER' -->
+      <div id="js-component-timer" class="cell shrink content output">
+        <h3>Time Remaining: <span id="js-time-remaining">30</span></h3>
+      </div> 
+      <!-- Component #2 -->
+
+      <!-- Component #3, 'TRIVIA QUESTION' -->
+      <div id="js-component-question" class="cell content">
+        <h2>In what month is the Earth closest to the sun?</h2>
+      </div> 
+      <!-- Component #3 -->
+
+      <!-- Component #6, 'CORRECT RESPONSE' -->
+      <div id="js-component-correct" class="cell content shrink output">
+        <h4>Correct!</h4>
+        <img src="./assets/images/dancing-earth.gif">
+      </div> 
+      <!-- Component #6 -->
+      <!-- ===================================== -->
+      <!-- Forth View, when player guessed right -->
+      <!-- ===================================== -->
+
+
+      <div class="cell text-center">
+        View #4, if player guessed right
+        <hr>
+      </div>
+
+
+      <!-- ===================================== -->
+      <!-- Fifth View, when player finishes game -->
+      <!-- ===================================== -->
+      <!-- Component #7, 'FINAL STATS' -->
+      <div id="js-component-reset" class="cell content shrink output">
+        <h2>All done, here's how you did!</h2>
+        <p>Correct Answers: 3</p>
+        <p>Incorrect Answers: 4</p>
+        <p>Unanswered: 1</p>
+      </div> 
+      <!-- Component #7 -->
+
+      <!-- Component #8, 'START OVER' button -->
+      <div class="cell">
+        <button id="js-reset-button" class="button large alert">Start Over?</button>
+      </div>
+      <!-- Component #8 -->
+      <!-- ===================================== -->
+      <!-- Fifth View, when player finishes game -->
+      <!-- ===================================== -->
+
+
+      <div class="cell text-center">
+        View #5, when game is over
+        <hr>
+      </div>
+
+
+    <!-- ============================= -->
+    <!-- ============================= -->
+    <!-- Dynamic Content will end here -->
+    </div>
+    <!-- ============================= -->
+    <!-- ============================= -->
+
+  </div> <!-- End 'grid-container' -->
+
+  <!-- jQuery -->
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous">
+  </script>
+
+  <!-- Foundation JavaScript -->
+  <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js" 
+    crossorigin="anonymous">
+  </script>
+
+  <!-- Custom JS -->
+  <script src="assets/javascript/app.js"></script>
+</body>
 </html>
