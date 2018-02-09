@@ -1,0 +1,15 @@
+/* Organization Template */
+    /* Layout - position/floar/clear/display */
+    /* Box Model Properties - width/height/margin/padding */
+    /* Visual - color/background/border/box-shadow */
+    /* Typography - font-size/font-family/text-align/text-transform */
+    /* Other - cursor/overflow/z-index */
+
+@import url('https://fonts.googleapis.com/css?family=Ultra');
+/* font-family: 'Ultra', serif; */
+
+body {
+  background: url('../images/earth-and-moon.jpg') center bottom/cover no-repeat fixed;
+  font-family: 'Ultra', serif;
+  color: white;
+}
