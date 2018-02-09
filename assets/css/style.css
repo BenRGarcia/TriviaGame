@@ -9,7 +9,52 @@
 /* font-family: 'Ultra', serif; */
 
 body {
-  background: url('../images/earth-and-moon.jpg') center bottom/cover no-repeat fixed;
-  font-family: 'Ultra', serif;
+  background: url('../images/earth-and-moon.jpg') center/cover no-repeat fixed;
   color: white;
+  font-family: 'Ultra', serif !important;
+  text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: 'Ultra', serif;
+}
+
+.title {
+  margin-bottom: 1rem;
+}
+
+.output {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.button.large {
+  display: block;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 2rem;
+}
+
+.content {
+  min-width: 250px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 10px;
+  border: 2px solid red;
+  margin-bottom: 0.8rem;
+  text-align: center !important;
+}
+
+.choices:hover {
+  opacity: 0.8;
+}
+
+img {
+  max-width: 280px;
+}
+
+#js-start-button {
+  margin-top: 25vh;
 }
