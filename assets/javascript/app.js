@@ -2,16 +2,76 @@
 // - Objects
 
 /*
- * { (8) questions, answer list, html id's
+ * 
  * 
  */
+// Which object will track time? gameProps? controller? separate object?
 
- const triviaProps = {
-  
- };
+const triviaProps = {
+  _correctCount: 0,
+  _incorrectCount: 0,
+  _unansweredCount: 0,
+  _questionObj: {},
 
-// Trivia Question Bank
- const triviaQuestions = {
+  set questionObj(obj) {
+    if (Object.keys(obj).indexOf("question") !== -1 &&
+        Object.keys(obj).indexOf("choices") !== -1 &&
+        Object.keys(obj).indexOf("answer") !== -1)
+    {
+      this._questionObj = obj;
+    }
+    else
+    {
+      console.log(`Question object ${obj} not set. Required properties not present`);
+    }
+  },
+
+  get question() {
+    return this._questionObj.question;
+  },
+
+  get choices() {
+    return this._questionObj.choices;
+  },
+
+  get answer() {
+    return this._questionObj.answer
+  },
+
+  get correctCount() {
+    return this._correctCount;
+  },
+
+  get incorrectCount() {
+    return this._incorrectCount;
+  },
+
+  get unansweredCount() {
+    return this._unansweredCount;
+  },
+
+  incrementCorrect() {
+    this._correctCount++;
+  },
+
+  incrementIncorrect() {
+    this._incorrectCount++;
+  },
+
+  incrementUnanswered() {
+    this._unansweredCount++;
+  },
+
+  resetGame() {
+    this._correctCount = 0;
+    this._incorrectCount = 0;
+    this._unansweredCount = 0;
+    this._questionObj = {};
+  }
+};
+
+// Question Bank
+const triviaQuestions = {
   _questionObj: [
     {
       question: "In which month is the Earth closest to the Sun?",
@@ -55,12 +115,12 @@
     },
   ],
 
-  get questionObj(index) {
+  getQuestionObj(index) {
     return this._questionObj[index];
   }
- };
+};
 
-// Object with file paths to situational .gif's
+// File paths to .gif's based on game state
 const gifs = {
   correct: "./assets/images/dancing-earth.gif",
   incorrect: "./assets/images/sad-earth.gif",
