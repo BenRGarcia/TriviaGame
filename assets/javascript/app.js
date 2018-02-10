@@ -1,24 +1,44 @@
 // MODEL
 // - Objects
 
-/*
- * 
- * 
- */
-// Which object will track time? gameProps? controller? separate object?
 
 const timer = {
-  _questionLimit: 15,
-  _transitionLimit: 5,
+  _timeRemaining: 0,
+  _intervalId: 0,
 
-  // JS methods to use:
-  //     - setInterval()
-  //     - clearInterval()
+  set timeRemaining(seconds) {
+    if (typeof seconds === "number") {
+      let milliseconds = seconds * 1000;
+      this._timeRemaining() = milliseconds;
+      return this._timeRemaining;
+    } else {
+      console.log(`Timer object's 'timeRemaining' property not set. '${seconds}' is not a number`);
+    }
+  },
+
+  get timeRemaining() {
+    console.log(`timer object's 'get timeRemaining' just called`);
+    return this._timeRemaining / 1000;
+  }
+
+  start() {
+    this._intervalId = setInterval( () => {
+      this.countDown();
+    } , 1000);
+  },
+
+  countDown() {
+    this._timeRemaining--;
+    console.log(`Time remaining: ${this._timeRemaining / 1000} seconds`);
+    if (this._timeRemaining <= 0) {
+      this.reset();
+    }
+    return this._timeRemaining;
+  },
 
   reset() {
-    this._questionLimit = 15;
-    this._transitionLimit = 5;
-  }
+    clearInterval(this._intervalId);
+  },
 };
 
 const triviaProps = {
