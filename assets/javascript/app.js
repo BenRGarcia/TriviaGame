@@ -7,6 +7,33 @@
  */
 // Which object will track time? gameProps? controller? separate object?
 
+const timer = {
+  questionLimit: 10000, // 10 seconds
+  transitionLimit: 4000, // 4 seconds
+  isQuestionTimeUp() {
+
+    var start = Date.now();
+
+    setTimeout(function() {
+
+      var elapsed = Date.now() - start
+
+      while (  < this.questionLimit) {
+
+        // Date.now()
+        // setTimeout()
+        // setInterval()
+        // clearInterval()
+        // Date.getTime()
+        // https://www.sitepoint.com/creating-accurate-timers-in-javascript/
+
+      }
+
+    }, 100);
+
+  },
+};
+
 const triviaProps = {
   _correctCount: 0,
   _incorrectCount: 0,
