@@ -8,30 +8,17 @@
 // Which object will track time? gameProps? controller? separate object?
 
 const timer = {
-  questionLimit: 10000, // 10 seconds
-  transitionLimit: 4000, // 4 seconds
-  isQuestionTimeUp() {
+  _questionLimit: 15,
+  _transitionLimit: 5,
 
-    var start = Date.now();
+  // JS methods to use:
+  //     - setInterval()
+  //     - clearInterval()
 
-    setTimeout(function() {
-
-      var elapsed = Date.now() - start
-
-      while (  < this.questionLimit) {
-
-        // Date.now()
-        // setTimeout()
-        // setInterval()
-        // clearInterval()
-        // Date.getTime()
-        // https://www.sitepoint.com/creating-accurate-timers-in-javascript/
-
-      }
-
-    }, 100);
-
-  },
+  reset() {
+    this._questionLimit = 15;
+    this._transitionLimit = 5;
+  }
 };
 
 const triviaProps = {
@@ -75,6 +62,19 @@ const triviaProps = {
 
   get unansweredCount() {
     return this._unansweredCount;
+  },
+
+  isAnswerCorrect(guess) {
+    console.log(`The player guessed ${guess}, and the answer is: ${this.answer}`);
+    if (guess === this.answer) {
+      console.log(`Correct!`);
+      // this.incrementCorrect();
+      return true;
+    } else {
+      console.log(`Incorrect!`);
+      // this.incrementIncorrect();
+      return false;
+    }
   },
 
   incrementCorrect() {
