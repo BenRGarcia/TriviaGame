@@ -1,5 +1,3 @@
-import * as component from './components.js';
-
 // VIEW - output representation of information
 
 
