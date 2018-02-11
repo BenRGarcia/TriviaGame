@@ -20,7 +20,7 @@
 
 /*===========================================================================*/
 // Contains files paths to animated .gif's
-export const gifs = {
+const gifs = {
   correct:   "./assets/images/dancing-earth.gif",
   incorrect: "./assets/images/sad-earth.gif",
   gameOver:  "./assets/images/happy-earth.gif"
@@ -28,7 +28,7 @@ export const gifs = {
 
 /*===========================================================================*/
 // Accepts initial set time, counts down by second, publishes state change to subscribers
-export const countDownTimer = {
+const countDownTimer = {
   _timeRemaining: 0,
   _intervalId: 0,
   _subscribers: [],
@@ -36,11 +36,11 @@ export const countDownTimer = {
   // Add subscribers who need state of countDownTimer._timeRemaining
   set addSubscriber(newSubscriber) {
     // Reject new subscribers without required 'receiveData()' property
-    if (Object.keys(newSubscriber).indexOf("receiveData") !== -1) {
+    if (Object.keys(newSubscriber).indexOf("receiveTimerData") !== -1) {
       this._subscribers.push(newSubscriber);
       return newSubscriber;
     } else {
-      console.log(`Subscriber '${newSubscriber}' not added. Required property 'receiveData()' not present.`);
+      console.log(`Subscriber '${newSubscriber}' not added. Required property 'receiveTimerData()' not present.`);
     }
   },
 
@@ -92,7 +92,7 @@ export const countDownTimer = {
 
 /*===========================================================================*/
 // Manages trivia game's state
-export const triviaProps = {
+const triviaProps = {
   _correctCount: 0,
   _incorrectCount: 0,
   _unansweredCount: 0,
@@ -172,7 +172,7 @@ export const triviaProps = {
 
 /*===========================================================================*/
 // Holds bank of trivia questions, choices to offer, and correct answer
-export const triviaQuestions = {
+const triviaQuestions = {
   _questionObj: [
     {
       question: "In which month is the Earth closest to the Sun?",
