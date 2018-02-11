@@ -1,43 +1,76 @@
 // MODEL
 // - Objects
 
-
-const timer = {
+// countDownTimer object to count down time remaining, publish state to subscribers
+const countDownTimer = {
   _timeRemaining: 0,
   _intervalId: 0,
+  _subscribers: [],
 
-  set timeRemaining(seconds) {
-    if (typeof seconds === "number") {
-      let milliseconds = seconds * 1000;
-      this._timeRemaining() = milliseconds;
-      return this._timeRemaining;
+  // Add subscribers who need state of countDownTimer._timeRemaining
+  set addSubscriber(newSubscriber) {
+    // Reject new subscribers without required 'receiveData()' property
+    if (Object.keys(newSubscriber).indexOf("receiveData") !== -1) {
+      this._subscribers.push(newSubscriber);
+      return newSubscriber;
     } else {
-      console.log(`Timer object's 'timeRemaining' property not set. '${seconds}' is not a number`);
+      console.log(`Subscriber '${newSubscriber}' not added. Required property 'receiveData()' not present.`);
     }
   },
 
-  get timeRemaining() {
-    console.log(`timer object's 'get timeRemaining' just called`);
-    return this._timeRemaining / 1000;
-  }
+  set timeRemaining(minutes, seconds) {
+    if (typeof minutes === "number" &&
+        typeof seconds === "number" &&
+        seconds < 60) 
+    {
+      let totalSeconds = this.convertToSeconds(minutes, seconds);
+      this._timeRemaining = totalSeconds;
+      this.publish();
+      return totalSeconds;
+    } 
+    else 
+    {
+      console.log(`countDownTimer object's 'timeRemaining' property not set. '${minutes}' and '${seconds}' are not both numbers.`);
+    }
+  },
+
+  convertToSeconds(minutes, seconds) {
+    let totalSeconds = (minutes * 60) + seconds;
+    return totalSeconds;
+  },
 
   start() {
     this._intervalId = setInterval( () => {
       this.countDown();
     } , 1000);
+    return this._intervalId;
   },
 
+  // Decrement time remaining only if time isn't up, otherwise reset countDownTimer
   countDown() {
-    this._timeRemaining--;
-    console.log(`Time remaining: ${this._timeRemaining / 1000} seconds`);
-    if (this._timeRemaining <= 0) {
+    if (this._timeRemaining > 0) {
+      this._timeRemaining--;
+      this.publish();
+      console.log(`Time remaining was just decremented to: ${this._timeRemaining}`);
+    } else if (this._timeRemaining <= 0) {
+      console.log(`countDownTimer just hit 0... countDownTimer.reset() called`);
       this.reset();
     }
+    console.log(`Time remaining: ${this._timeRemaining} seconds`);
     return this._timeRemaining;
+  },
+
+  // method that will push out countDownTimer state change to subscribers
+  publish() {
+    let totalSubscribers = this._subscribers.length;
+    for (let i = 0; i < totalSubscribers; i++) {
+      this._subscribers[i].receiveData(this._timeRemaining);
+    }
   },
 
   reset() {
     clearInterval(this._intervalId);
+    this._timeRemaining = 0;
   },
 };
 
@@ -169,9 +202,9 @@ const triviaQuestions = {
 
 // File paths to .gif's based on game state
 const gifs = {
-  correct: "./assets/images/dancing-earth.gif",
+  correct:   "./assets/images/dancing-earth.gif",
   incorrect: "./assets/images/sad-earth.gif",
-  gameOver: "./assets/images/happy-earth.gif"
+  gameOver:  "./assets/images/happy-earth.gif"
 };
 
 
