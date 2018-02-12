@@ -24,3 +24,17 @@
  * Game Over:
  *     - Components #7, #8
  */
+
+const startButton = '<div class="cell"><button class="button large alert start-button js-listen">START</button></div>';
+
+ const DOM = {
+  render(component) {
+    let pageHook = $("#js-page-content");
+    pageHook.empty();
+    // console.log(`DOM.render() was just called to render ${component}`);
+
+    if (component === "start-button") {
+      pageHook.html(startButton);
+    }
+  }
+ };
