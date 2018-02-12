@@ -9,8 +9,8 @@
 <!-- First View, when page loads -->
 <!-- =========================== -->
 <!-- Component #1, 'START' button -->
-<div id="js-component-start" class="cell">
-  <button id="js-start-button" value="start" class="button large alert">START</button>
+<div class="cell">
+  <button class="button large alert start-button js-listen">START</button>
 </div>
 <!-- =========================== -->
 
@@ -20,20 +20,20 @@
 <!-- Second View, when player asked question -->
 <!-- ======================================= -->
 <!-- Component #2, 'TIMER' -->
-<div id="js-component-timer" class="cell shrink content output">
-  <h3>Time Remaining: <span id="js-time-remaining">30</span></h3>
-</div> 
+<div class="cell shrink content output">
+  <h3>Time Remaining: <span id="js-time-remaining">30</span> seconds</h3>
+</div>
 <!-- Component #3, 'TRIVIA QUESTION' -->
-<div id="js-component-question" class="cell content">
+<div class="cell content">
   <h2>In what month is the Earth closest to the sun?</h2>
-</div> 
+</div>
 <!-- Component #4, 'TRIVIA ANSWERS' -->
-<div id="js-component-answers" class="cell content shrink output">
-  <h4 id="js-choice-1" class="choices">January</h4>
-  <h4 id="js-choice-2" class="choices">April</h4>
-  <h4 id="js-choice-3" class="choices">July</h4>
-  <h4 id="js-choice-4" class="choices">October</h4>
-</div> 
+<div class="cell content shrink output">
+  <h4 class="choices js-listen">January</h4>
+  <h4 class="choices js-listen">April</h4>
+  <h4 class="choices js-listen">July</h4>
+  <h4 class="choices js-listen">October</h4>
+</div>
 <!-- ======================================= -->
 
 
@@ -42,15 +42,15 @@
 <!-- Third View, when player guessed wrong -->
 <!-- ===================================== -->
 <!-- Component #2, 'TIMER' -->
-<div id="js-component-timer" class="cell shrink content output">
-  <h3>Time Remaining: <span id="js-time-remaining">30</span></h3>
+<div class="cell shrink content output">
+  <h3>Time Remaining: <span id="js-time-remaining">30</span> seconds</h3>
 </div> 
 <!-- Component #3, 'TRIVIA QUESTION' -->
-<div id="js-component-question" class="cell content">
+<div class="cell content">
   <h2>In what month is the Earth closest to the sun?</h2>
 </div> 
 <!-- Component #5, 'INCORRECT RESPONSE' -->
-<div id="js-component-incorrect" class="cell content shrink output">
+<div class="cell content shrink output">
   <h4>NOPE!</h4>
   <h4>The correct answer was:</h4>
   <h4>January</h4>
@@ -64,34 +64,53 @@
 <!-- Forth View, when player guessed right -->
 <!-- ===================================== -->
 <!-- Component #2, 'TIMER' -->
-<div id="js-component-timer" class="cell shrink content output">
-  <h3>Time Remaining: <span id="js-time-remaining">30</span></h3>
-</div> 
+<div class="cell content shrink output">
+  <h3>Time Remaining: <span id="js-time-remaining">30</span> seconds</h3>
+</div>
 <!-- Component #3, 'TRIVIA QUESTION' -->
-<div id="js-component-question" class="cell content">
+<div class="cell content">
   <h2>In what month is the Earth closest to the sun?</h2>
-</div> 
+</div>
 <!-- Component #6, 'CORRECT RESPONSE' -->
-<div id="js-component-correct" class="cell content shrink output">
+<div class="cell content shrink output">
   <h4>Correct!</h4>
   <img src="./assets/images/dancing-earth.gif">
+</div>
+<!-- ===================================== -->
+
+
+
+<!-- ===================================== -->
+<!-- Fifth View, when timer ran out.       -->
+<!-- ===================================== -->
+<!-- Component #2, 'TIMER' -->
+<div class="cell content shrink output">
+  <h3>Time Remaining: <span id="js-time-remaining">0</span> seconds</h3>
+</div>
+<!-- Component #7, time ran out -->
+<div class="cell content shrink output">
+  <h4>Out of time!</h4>
+  <h4>The correct answer was:</h4>
+  <h4>January</h4>
+  <img src="./assets/images/sad-earth.gif">
 </div> 
 <!-- ===================================== -->
 
 
 
 <!-- ===================================== -->
-<!-- Fifth View, when player finishes game -->
+<!-- Sixth View, when player finishes game -->
 <!-- ===================================== -->
-<!-- Component #7, 'FINAL STATS' -->
-<div id="js-component-reset" class="cell content shrink output">
+<!-- Component #8, 'FINAL STATS' -->
+<div class="cell content shrink output">
   <h2>All done, here's how you did!</h2>
   <p>Correct Answers: 3</p>
   <p>Incorrect Answers: 4</p>
   <p>Unanswered: 1</p>
+  <img src="" alt="">
 </div>
-<!-- Component #8, 'START OVER' button -->
+<!-- Component #9, 'START OVER' button -->
 <div class="cell">
-  <button id="js-reset-button" value="start-over" class="button large alert">Start Over?</button>
+  <button class="button large alert js-listen">Start Over?</button>
 </div>
 <!-- ===================================== -->
