@@ -1,30 +1,16 @@
 // CONTROLLER - accepts input and converts it to commands for the model or view
 
-// Method list:
-/*
- * 1) Initialize game when it first starts
- * 
- * 2) Reset game when 'start' or 'start over' is clicked
- * 
- * 3) Handle user clicks, 2 categories: a) start/start over, b) question guess
- * 
- * 4) add next question to triviaProps question object, render to screen, set timer
- * 
- * 5) handle if timer runs out of seconds "out of time"
- * 
- * 6) handle user guesses if right
- * 
- * 7) handle user guess if wrong
- * 
- * 8) handle when game is over (no more questions remain)
- * 
- * 
- * 
- * 
- * 
- */
 
- /* FUNCTION # 1 */
+// Property List:
+  // _questionsLeft will know when zero questions remain
+  // _questionIsActive will know if game is in a question or a transition view
+  // _questionTimeLimit will decide the length of time a player has to answer a question
+  // _transitionTimeLimit will decide the length of time a player sees the animated gif screen
+
+
+// Method list:
+
+/* FUNCTION # 1 */
  // clickHandler()
 
   // split clicks into 2 categories: 1) start/start over, 2) player chose an answer
@@ -125,14 +111,6 @@
 
 
 /* FUNCTION # 11 */
-
-
-/* FUNCTION # 12 */
-
-
-
-
-/* FUNCTION # 13 */
 // start()
 
   // reset triviaProps object
@@ -140,13 +118,12 @@
   // call triviaGame.nextQuestion()
 
 
-/* FUNCTION # 14 */
+/* FUNCTION # 12 */
 // initialize()
 
   // (only runs when the page is first loaded)
   // add subscribers to subscriber list in countDownTimer
   // render start button to page
-
 
 
 const triviaGame = {
@@ -266,24 +243,16 @@ const triviaGame = {
 };
 
 
+/* ========================================================================= */
+/* ========================================================================= */
+/* ========================================================================= */
+/* ========================================================================= */
+/* ========================================================================= */
+/* ========================================================================= */
+/* ========================================================================= */
 
 
-
-
-
-
-
-
-
-
-
-
-
-// Approved code:
-
-
-
-
+// Finalized Code Below:
 
 // When game first starts, initialize round
 triviaGame.initialize();
