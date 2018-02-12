@@ -11,7 +11,7 @@
 // Method list:
 
 /* FUNCTION # 1 */
- // clickHandler()
+ // clickHandler(clickValue)
 
   // split clicks into 2 categories: 1) start/start over, 2) player chose an answer
 
@@ -126,148 +126,138 @@
   // render start button to page
 
 
+// Controller object, takes player clicks and translates into game logic
 const triviaGame = {
   _questionsLeft: 0,
   _questionIsActive: false,
-  _questionTimeLimit: 10,
-  _transitionTimeLimit: 5,
+  _questionTimeLimit: 6,
+  _transitionTimeLimit: 3,
   
-  // Handle user clicks, 2 categories: a) start/start over, b) player chose an answer
+  // Receives all click event values
   clickHandler(clickValue) {
-
-    // Player is ready to start game
-    if (clickValue === "START" || clickValue === "START OVER?")
-    {
-      console.log(`Click value '${clickValue}' received by triviaGame.clickHandler`);
-      // Start new round
-      this.startGame();
-    } 
-    // User has guessed the answer to the trivia question
-    else {
-      evaluate(clickValue);
-      console.log(`Player has guessed answer choice: ${clickValue}`);
+    if (clickValue === "START" || clickValue === "START OVER?") {
+      // Player clicked START/START OVER, need to start game
+      this.start();
+    } else {
+      // Player selected an answer choice
+      this.evaluate(clickValue);
     }
   },
 
-  // Is user guess right or wrong?
-  evalute(choice) {
+  // Sets trivia question, renders to screen -- will detect if game is over
+  nextQuestion() {
+    // Only set next question if more questions remain in question bank
+    if (this._questionsLeft > 0) {
+      this._questionIsActive = true;
+      this._questionsLeft--;
+      triviaProps.questionObj = triviaQuestions._questionObj[this._questionsLeft - 1]
+      DOM.render("question");
+      this.setTimer(this._questionTimeLimit);
+    } else { // No more questions remain, game is over
+      this.gameIsOver();
+    }
+  },
 
-    // Clear countDownTimer b/c guess was received before time ran out
-    countDownTimer.reset();
-    
-    console.log(`Player guess received by triviaGame.evaluate(), and...`);
-    if (triviaProps.isAnswerCorrect(choice)) {
-      // user guess was right
-      console.log(`User guess of ${choice} was correct!!`);
+  // Will evaluate if player's choice was right or wrong
+  evaluate(choice) {
+    this.stopTimer();
+    this._questionIsActive = false;
+    if (choice === triviaProps.answer) {
+      // User guess was right
       this.guessWasRight();
     } else {
-      // user guess was wrong
-      console.log(`User guess of ${choice} did not match answer of ${triviaProps.answer}`);
+      // User guess was wrong
       this.guessWasWrong();
     }
   },
 
-  // For when the player guessed right
+  // For when the player choice was right
   guessWasRight() {
-    this._questionIsActive = false;
-    this.setTimer(this._transitionTimeLimit);
     triviaProps.incrementCorrect();
-    console.log(`Because the player's guess was right, the correctly answered count is now: ${triviaProps.correctCount}`);
+    DOM.render("correctAnswer");
+    setTimer(this._transitionTimeLimit);
   },
 
-  // For when the player guessed wrong
+  // For when the player choice was wrong
   guessWasWrong() {
-    this._questionIsActive = false;
-    this.setTimer(this._transitionTimeLimit);
     triviaProps.incrementIncorrect();
-    console.log(`Because the player's guess was wrong, the incorrectly answered count is now: ${triviaProps.incorrectCount}`);
+    DOM.render("incorrectAnswer");
+    setTimer(this._transitionTimeLimit);
   },
 
-  // For when the player did not guess in the alloted time
+  // For when the player did not choose an answer within the alloted time
   questionWasUnanswered() {
     this._questionIsActive = false;
-    this.setTimer(this._transitionTimeLimit);
     triviaProps.incrementUnanswered();
-    console.log(`Because the player did not guess, the unanswered count is now: ${triviaProps.unansweredCount}`);
-  },
-  
-  // Add question and answer choices to the screen
-  nextQuestion() {
-    console.log(`triviaGame.nextQuestion was just called!`);
-
-    this._questionIsActive = true;
-
-    // Remove contents of #js-page-content before adding new content
-    // DOM.render('clearScreen');
-
-    // only set next question if more questions remain
-    if (this._questionsLeft > 0) {
-      // load next question to question object
-      triviaProps.questionObj = triviaQuestions._questionObj[this._questionsLeft - 1]
-      this.setTimer(this._questionTimeLimit);
-      this._questionsLeft--;
-
-    } else {
-      // game is over, show game stats and 'START OVER?' button
-    }
-    // triviaProps.questionObj = triviaQuestions.getQuestionObject[];
+    DOM.render("unanswered");
+    setTimer(this._transitionTimeLimit);
   },
 
   // Set countDownTimer's initial count down amount
   setTimer(seconds) {
     countDownTimer.setTimeRemaining = seconds;
-    console.log(`triviaGame just called countDownTimer.timeRemaining to be ${seconds} seconds.`);
-    countDownTimer.start();
+    console.log(`triviaGame.setTimer just called countDownTimer.setTimeRemaining for ${seconds} seconds.`);
+  },
+
+  // Will stop the countDownTimer
+  stopTimer() {
+    console.log(`triviaGame.stopTimer() was just called, telling countDownTimer to STOP!`);
+    countDownTimer.reset();
   },
 
   receiveTimerData(secondsRemaining) {
-    console.log(`triviaGame.receiveTimerData just received ${secondsRemaining}`);
+    console.log(`triviaGame.receiveTimerData() just received: ${secondsRemaining} seconds remaining.`);
+    DOM.render("timeRemaining");
+    // Only take further action if time has run out
+    if (secondsRemaining <= 0) {
+      console.log(`triviaGame.receiveTimerData entered its 'if' statement for 0 seconds left.`)
+      this.stopTimer();
+      // Is game on question screen or transition screen?
+      if (this._questionIsActive) {
+        console.log(`triviaGame.receiveTimerData entered its 'if' statement for being on 'question' screen.`)
+        // Game is on a question screen, time has ran out and no choice received by player
+        this.questionWasUnanswered();
+      } else {
+        console.log(`triviaGame.receiveTimerData entered its 'if' statement for being on 'transition' screen.`)
+        // Game is on a transition screen, time has ran out and it's time to ask the next question
+        this.nextQuestion();
+      }
+    } else {/* Do nothing b/c there is still more time */}
   },
 
-  startGame() {
+  // 'Game Over' view rendered to page
+  gameIsOver() {
+    DOM.render("gameOver");
+  },
+
+  // Resets game props, renders first question to screen for player
+  start() {
     triviaProps.resetGame();
     this._questionsLeft = triviaQuestions._questionObj.length;
     this.nextQuestion();
   },
 
+  // Runs once when page is first loaded
   initialize() {
-
-    // Add subscribers to countDownTimers
+    // Add controller as subscriber to countDownTimer
     countDownTimer.addSubscriber = triviaGame;
-    // countDownTimer.addSubscriber = DOM; (uncomment line after view is finished)
-
     // Render start button to page
-    // DOM.render("start-button"); (uncomment line after view is finished)
-
+    DOM.render("start-button");
   }
 };
 
-
-/* ========================================================================= */
-/* ========================================================================= */
-/* ========================================================================= */
-/* ========================================================================= */
-/* ========================================================================= */
-/* ========================================================================= */
-/* ========================================================================= */
-
-
-// Finalized Code Below:
-
-// When game first starts, initialize round
-triviaGame.initialize();
-
 // Shorthand for $( document ).ready()
 $(function() {
-
-  // Listen for clicks on children of parent element of class ".js-listen"
+  // Listen for clicks on children of parent element, and of class ".js-listen"
+  // (Conveniently ignores everything clicked not expressly designed to be heard)
   $('#js-page-content').on('click', ".js-listen", e => {
-
       // get text of element user clicked
       let clickValue = e.target.innerText;
       console.log(`${clickValue} was just clicked`);
-
       // pass user clicks to triviaGame object
       triviaGame.clickHandler(clickValue);
   });
 });
+
+// When game first starts, initialize round
+triviaGame.initialize();
