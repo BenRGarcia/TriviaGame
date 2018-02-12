@@ -55,6 +55,6 @@ img {
   max-width: 280px;
 }
 
-#js-start-button {
-  margin-top: 25vh;
+.start-button {
+  margin-top: 20vh;
 }
