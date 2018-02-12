@@ -3,7 +3,7 @@
 // Contains static (ex.: .header) and dynamic (ex.: ._timer) components to appear on page
 const components = {
   header: `<div class="cell">` +
-            `<a href="https://github.com/BenRGarcia/Star-Wars-RPG" target="_blank">View Source Code</a>` +
+            `<a href="https://github.com/BenRGarcia/TriviaGame" target="_blank">View Source Code</a>` +
           `</div>` +
           `<div class="cell">` +
             `<h1 class="title">Planetary Trivia!</h1>` +
