@@ -24,17 +24,23 @@
  * Game Over:
  *     - Components #7, #8
  */
-
+const header = '<div class="cell"><a href="https://github.com/BenRGarcia/Star-Wars-RPG" target="_blank">View Source Code</a></div><div class="cell"><h1 class="title">Planetary Trivia!</h1></div>';
 const startButton = '<div class="cell"><button class="button large alert start-button js-listen">START</button></div>';
 
- const DOM = {
+const DOM = {
   render(component) {
+    let headerHook = $("#js-header");
     let pageHook = $("#js-page-content");
     pageHook.empty();
     // console.log(`DOM.render() was just called to render ${component}`);
 
     if (component === "start-button") {
-      pageHook.html(startButton);
+      pageHook.html(header + startButton);
+    }
+
+    if (component === "header") {
+      headerHook.empty();
+      headerHook.html(header);
     }
   }
- };
+};
