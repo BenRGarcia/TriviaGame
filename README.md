@@ -6,7 +6,7 @@ Click [here](https://benrgarcia.github.io/TriviaGame/) to see the live site
 
  * Trivia game using Javascript, jQuery
 
- * CSS framework Foundation used
+ * CSS framework 'Foundation' used
 
 ## How to play
 
