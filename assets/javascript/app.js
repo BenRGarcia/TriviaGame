@@ -2,6 +2,7 @@
 
 // Controller object, takes player clicks and translates into game logic
 const triviaGame = {
+  _objName: "triviaGame", // delete this property after debugging
   _questionsLeft: 0,
   _questionIsActive: false,
   _questionTimeLimit: 4,
@@ -9,9 +10,9 @@ const triviaGame = {
   
   // Receives all click event values
   clickHandler(clickValue) {
-    console.log(`triviaGame.clickHandler() just received ${clickValue}...`);
+    // console.log(`triviaGame.clickHandler() just received ${clickValue}...`);
     if (clickValue === "START" || clickValue === "START OVER?") {
-      console.log(`and now the game is starting/restarting`);
+      // console.log(`and now the game is starting/restarting`);
       // Player clicked START/START OVER, need to start game
       this.start();
     } else {
@@ -41,7 +42,7 @@ const triviaGame = {
   // Will evaluate if player's choice was right or wrong
   evaluate(choice) {
     console.log(`triviaGame.evaluate() was just called...`);
-    this.stopTimer();
+    this.stopTimer(); // Required to stop the timer when player makes a choice before time is up
     this._questionIsActive = false;
     if (choice === triviaProps.answer) {
       console.log(`and the player's choice was right`);
@@ -76,7 +77,7 @@ const triviaGame = {
     this._questionIsActive = false;
     triviaProps.incrementUnanswered();
     DOM.render("unanswered");
-    setTimer(this._transitionTimeLimit);
+    this.setTimer(this._transitionTimeLimit);
   },
 
   // Set countDownTimer's initial count down amount
@@ -97,7 +98,7 @@ const triviaGame = {
     // Only take further action if time has run out
     if (secondsRemaining <= 0) {
       console.log(`triviaGame.receiveTimerData entered its 'if' statement for 0 seconds left.`)
-      this.stopTimer();
+      // this.stopTimer(); // this line may be unecessary -- countDownTimer should automatically stop
       // Is game on question screen or transition screen?
       if (this._questionIsActive) {
         console.log(`triviaGame.receiveTimerData entered its 'if' statement for being on 'question' screen.`)
@@ -119,7 +120,7 @@ const triviaGame = {
 
   // Resets game props, renders first question to screen for player
   start() {
-    console.log(`triviaGame.start() was just called`);
+    // console.log(`triviaGame.start() was just called`);
     triviaProps.resetGame();
     this._questionsLeft = triviaQuestions._questionObj.length;
     this.nextQuestion();
@@ -127,7 +128,6 @@ const triviaGame = {
 
   // Runs once when page is first loaded
   initialize() {
-    console.log(`triviaGame.initialize() was called`);
     // Add controller as subscriber to countDownTimer
     countDownTimer.addSubscriber = triviaGame;
     // Render start button to page
@@ -142,7 +142,7 @@ $(function() {
   $('#js-page-content').on('click', ".js-listen", e => {
       // get text of element user clicked
       let clickValue = e.target.innerText;
-      console.log(`jQuery event listenser says: ${clickValue} was just clicked`);
+      // console.log(`jQuery event listenser says: ${clickValue} was just clicked`);
       // pass user clicks to triviaGame object
       triviaGame.clickHandler(clickValue);
   });
