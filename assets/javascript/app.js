@@ -131,6 +131,7 @@ const triviaGame = {
     // Add controller as subscriber to countDownTimer
     countDownTimer.addSubscriber = triviaGame;
     // Render start button to page
+    DOM.render("header");
     DOM.render("start-button");
   }
 };
