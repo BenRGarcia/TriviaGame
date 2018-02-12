@@ -1,22 +1,71 @@
 // MODEL - directly manages the data, logic and rules of the application
 
-/*
- * Object Directory:
- * 
- * "gifs"
- *     - Contains files paths to animated .gif's
- * 
- * "countDownTimer"
- *     - Accepts initial set time, counts down by second,
- *       publishes state change to subscribers
- * 
- * "triviaProps"
- *     - Manages trivia game's state
- * 
- * "triviaQuestions"
- *     - Holds bank of trivia questions, choices to offer, 
- *       and correct answer
- */
+/*===========================================================================*/
+// Accepts initial set time, counts down by second, publishes state change to subscribers
+const countDownTimer = {
+  _timeRemaining: 0,
+  _timeoutId: 0,
+  _intervalIdTimer: 0,
+  _intervalIdPublish: 0,
+  _subscribers: [],
+
+  // Add subscribers who need state of countDownTimer._timeRemaining
+  set addSubscriber(newSubscriber) {
+    // Reject new subscribers without required 'receiveData()' property
+    if (Object.keys(newSubscriber).indexOf("receiveTimerData") !== -1) {
+      countDownTimer._subscribers.push(newSubscriber);
+      // console.log(`Subscriber object '${newSubscriber._objName}' added to countDownTimer's subscriber list`);
+    } else {console.log(`Subscriber '${newSubscriber}' not added.`);} // Delete 'else' when done debugging
+  },
+
+  set setTimeRemaining(seconds) {
+    // console.log(`countDownTimer.setTimeRemaining() was called`);
+    countDownTimer.reset();
+    if (typeof seconds === "number") {
+      // console.log(`countDownTimer.setTimeRemaining just received ${seconds} seconds`);
+      countDownTimer._timeRemaining = seconds;
+      countDownTimer.start();
+    } else console.log(`countDownTimer object's 'timeRemaining' property not set. '${minutes}' and '${seconds}' are not both numbers.`);
+  },
+
+  start() {
+    // console.log(`countDownTimer.start() was called`);
+    countDownTimer._intervalIdPublish = setInterval(countDownTimer.publish, 1000);
+    // setTimeout() will offset and give publish() time to run
+    countDownTimer._timeoutId = setTimeout( () => {
+      countDownTimer._intervalIdTimer = setInterval(countDownTimer.countDown, 1000);
+    }, 200);
+  },
+
+  countDown() {
+    // console.log(`countDownTimer.countDown() was called`);
+    if (countDownTimer._timeRemaining > 0) {
+      countDownTimer._timeRemaining--;
+    } else {
+      countDownTimer.reset();
+      console.log(`Help! countDownTimer.countDown() was called when there was no time left!`);
+    }
+  },
+
+  publish() {
+    // console.log(`countDownTimer.publish() was called`);
+    let totalSubscribers = countDownTimer._subscribers.length;
+    for (let i = 0; i < totalSubscribers; i++) {
+      countDownTimer._subscribers[i].receiveTimerData(countDownTimer._timeRemaining);
+      if (countDownTimer._timeRemaining <= 0) {
+        countDownTimer.reset();
+      }
+    }
+  },
+
+  reset() {
+    // console.log(`countDownTimer.reset() was called`);
+    clearInterval(countDownTimer._intervalIdTimer);
+    clearInterval(countDownTimer._intervalIdPublish);
+    clearTimeout(countDownTimer._timeoutId);
+    countDownTimer._timeRemaining = 0;
+  },
+};
 
 /*===========================================================================*/
 // Contains files paths to animated .gif's
@@ -24,70 +73,6 @@ const gifs = {
   correct:   "./assets/images/dancing-earth.gif",
   incorrect: "./assets/images/sad-earth.gif",
   gameOver:  "./assets/images/happy-earth.gif"
-};
-
-/*===========================================================================*/
-// Accepts initial set time, counts down by second, publishes state change to subscribers
-const countDownTimer = {
-  _timeRemaining: 0,
-  _intervalId: 0,
-  _subscribers: [],
-
-  // Add subscribers who need state of countDownTimer._timeRemaining
-  set addSubscriber(newSubscriber) {
-    // Reject new subscribers without required 'receiveData()' property
-    if (Object.keys(newSubscriber).indexOf("receiveTimerData") !== -1) {
-      this._subscribers.push(newSubscriber);
-      return newSubscriber;
-    } else {
-      console.log(`Subscriber '${newSubscriber}' not added. Required property 'receiveTimerData()' not present.`);
-    }
-  },
-
-  set timeRemaining(seconds) {
-    if (typeof seconds === "number") 
-    {
-      this._timeRemaining = seconds;
-      this.publish();
-      return seconds;
-    } 
-    else 
-    {
-      console.log(`countDownTimer object's 'timeRemaining' property not set. '${minutes}' and '${seconds}' are not both numbers.`);
-    }
-  },
-
-  start() {
-    this._intervalId = setInterval( () => {
-      this.countDown();
-    } , 1000);
-    return this._intervalId;
-  },
-
-  countDown() {
-    if (this._timeRemaining > 0) {
-      this._timeRemaining--;
-      this.publish();
-      console.log(`Time remaining was just decremented to: ${this._timeRemaining}`);
-    } else if (this._timeRemaining <= 0) {
-      console.log(`countDownTimer just hit 0... countDownTimer.reset() called`);
-      this.reset();
-    }
-    console.log(`Time remaining: ${this._timeRemaining} seconds`);
-    return this._timeRemaining;
-  },
-
-  publish() {
-    let totalSubscribers = this._subscribers.length;
-    for (let i = 0; i < totalSubscribers; i++) {
-      this._subscribers[i].receiveData(this._timeRemaining);
-    }
-  },
-
-  reset() {
-    clearInterval(this._intervalId);
-    this._timeRemaining = 0;
-  },
 };
 
 /*===========================================================================*/
@@ -104,6 +89,7 @@ const triviaProps = {
         Object.keys(obj).indexOf("answer") !== -1)
     {
       this._questionObj = obj;
+      console.log(`triviaProps just set a new question object which asks: ${this.question}`);
     }
     else
     {
@@ -135,28 +121,20 @@ const triviaProps = {
     return this._unansweredCount;
   },
 
-  isAnswerCorrect(guess) {
-    console.log(`The player guessed ${guess}, and the answer is: ${this.answer}`);
-    if (guess === this.answer) {
-      console.log(`Correct!`);
-      return true;
-    } else {
-      console.log(`Incorrect!`);
-      return false;
-    }
-  },
-
   incrementCorrect() {
+    console.log(`triviaProps just added 1 to _correctCount`);
     this._correctCount++;
     return this._correctCount;
   },
 
   incrementIncorrect() {
+    console.log(`triviaProps just added 1 to _incorrectCount`);
     this._incorrectCount++;
     return this._incorrectCount;
   },
 
   incrementUnanswered() {
+    console.log(`triviaProps just added 1 to _unansweredCount`);
     this._unansweredCount++;
     return this._unansweredCount;
   },
