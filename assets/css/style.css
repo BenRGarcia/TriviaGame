@@ -1,12 +1,4 @@
-/* Organization Template */
-    /* Layout - position/floar/clear/display */
-    /* Box Model Properties - width/height/margin/padding */
-    /* Visual - color/background/border/box-shadow */
-    /* Typography - font-size/font-family/text-align/text-transform */
-    /* Other - cursor/overflow/z-index */
-
 @import url('https://fonts.googleapis.com/css?family=Ultra');
-/* font-family: 'Ultra', serif; */
 
 body {
   background: url('../images/earth-and-moon.jpg') center/cover no-repeat fixed;
@@ -49,6 +41,7 @@ h1, h2, h3, h4, h5, h6
 
 .choices:hover {
   opacity: 0.8;
+  cursor: pointer;
 }
 
 img {

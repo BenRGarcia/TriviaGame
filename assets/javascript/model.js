@@ -9,46 +9,36 @@ const countDownTimer = {
   _intervalIdPublish: 0,
   _subscribers: [],
 
-  // Add subscribers who need state of countDownTimer._timeRemaining
   set addSubscriber(newSubscriber) {
-    // Reject new subscribers without required 'receiveData()' property
     if (Object.keys(newSubscriber).indexOf("receiveTimerData") !== -1) {
       countDownTimer._subscribers.push(newSubscriber);
-      // console.log(`Subscriber object '${newSubscriber._objName}' added to countDownTimer's subscriber list`);
-    } else {console.log(`Subscriber '${newSubscriber}' not added.`);} // Delete 'else' when done debugging
+    }
   },
 
   set setTimeRemaining(seconds) {
-    // console.log(`countDownTimer.setTimeRemaining() was called`);
     countDownTimer.reset();
     if (typeof seconds === "number") {
-      // console.log(`countDownTimer.setTimeRemaining just received ${seconds} seconds`);
       countDownTimer._timeRemaining = seconds;
       countDownTimer.start();
-    } else console.log(`countDownTimer object's 'timeRemaining' property not set. '${minutes}' and '${seconds}' are not both numbers.`);
+    }
   },
 
   start() {
-    // console.log(`countDownTimer.start() was called`);
     countDownTimer._intervalIdPublish = setInterval(countDownTimer.publish, 1000);
-    // setTimeout() will offset and give publish() time to run
     countDownTimer._timeoutId = setTimeout( () => {
       countDownTimer._intervalIdTimer = setInterval(countDownTimer.countDown, 1000);
     }, 200);
   },
 
   countDown() {
-    // console.log(`countDownTimer.countDown() was called`);
     if (countDownTimer._timeRemaining > 0) {
       countDownTimer._timeRemaining--;
     } else {
       countDownTimer.reset();
-      console.log(`Help! countDownTimer.countDown() was called when there was no time left!`);
     }
   },
 
   publish() {
-    // console.log(`countDownTimer.publish() was called`);
     let totalSubscribers = countDownTimer._subscribers.length;
     for (let i = 0; i < totalSubscribers; i++) {
       countDownTimer._subscribers[i].receiveTimerData(countDownTimer._timeRemaining);
@@ -59,7 +49,6 @@ const countDownTimer = {
   },
 
   reset() {
-    // console.log(`countDownTimer.reset() was called`);
     clearInterval(countDownTimer._intervalIdTimer);
     clearInterval(countDownTimer._intervalIdPublish);
     clearTimeout(countDownTimer._timeoutId);
@@ -89,7 +78,6 @@ const triviaProps = {
         Object.keys(obj).indexOf("answer") !== -1)
     {
       this._questionObj = obj;
-      console.log(`triviaProps just set a new question object which asks: ${this.question}`);
     }
     else
     {
@@ -122,19 +110,16 @@ const triviaProps = {
   },
 
   incrementCorrect() {
-    console.log(`triviaProps just added 1 to _correctCount`);
     this._correctCount++;
     return this._correctCount;
   },
 
   incrementIncorrect() {
-    console.log(`triviaProps just added 1 to _incorrectCount`);
     this._incorrectCount++;
     return this._incorrectCount;
   },
 
   incrementUnanswered() {
-    console.log(`triviaProps just added 1 to _unansweredCount`);
     this._unansweredCount++;
     return this._unansweredCount;
   },
