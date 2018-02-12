@@ -27,20 +27,32 @@
 // const header = '<div class="cell"><a href="https://github.com/BenRGarcia/Star-Wars-RPG" target="_blank">View Source Code</a></div><div class="cell"><h1 class="title">Planetary Trivia!</h1></div>';
 // const startButton = '<div class="cell"><button class="button large alert start-button js-listen">START</button></div>';
 
+
+/*
+ * Bundled component string names:
+ *     "initialize":  .html(components.header/startButton)
+ *     "question":    .empty() #js-page-content, body.append(components.timer/question/choices)
+ *     "wrongAnswer": .remove("#js-remove") choices, body.append(component.incorrect) 
+ *     "rightAnswer": .remove("#js-remove") choices, body.append(component.correct) 
+ *     "unanswered":  .remove("#js-remove") choices, body.append(component.unanswered) 
+ *     "gameOver":    .empty() #js-page-content, body.append(component.gameOverStats)
+ * 
+ */
+
+
 const DOM = {
   render(component) {
-    let headerHook = $("#js-header");
-    let pageHook = $("#js-page-content");
-    pageHook.empty();
+    let header = $("#js-header");
+    let body = $("#js-page-content");
     // console.log(`DOM.render() was just called to render ${component}`);
 
     if (component === "start-button") {
-      pageHook.html(components.startButton);
+      body.html(components.startButton);
     }
 
     if (component === "header") {
-      headerHook.empty();
-      headerHook.html(components.header);
+      header.empty();
+      header.html(components.header);
     }
   }
 };
