@@ -75,7 +75,7 @@ const triviaProps = {
   set questionObj(obj) {
     if (Object.keys(obj).indexOf("question") !== -1 &&
         Object.keys(obj).indexOf("choices") !== -1 &&
-        Object.keys(obj).indexOf("answer") !== -1)
+        Object.keys(obj).indexOf("answerIndex") !== -1)
     {
       this._questionObj = obj;
     }
@@ -94,7 +94,7 @@ const triviaProps = {
   },
 
   get answer() {
-    return this._questionObj.answer
+    return this._questionObj.choices[this._questionObj.answerIndex];
   },
 
   get correctCount() {
@@ -140,42 +140,42 @@ const triviaQuestions = {
     {
       question: "In which month is the Earth closest to the Sun?",
       choices: ["January","April","July","October"],
-      answer: "January"
+      answerIndex: 0
     },
     {
       question: "What is the most abundant element in Earth's atmosphere?",
       choices: ["Hydrogen","Oxygen","Carbon","Nitrogen"],
-      answer: "Nitrogen"
+      answerIndex: 3
     },
     {
       question: "What is the most abundant metal in the earth's crust?",
       choices: ["Aluminum","Iron","Titanium","Copper"],
-      answer: "Aluminum"
+      answerIndex: 0
     },
     {
       question: "What is the second most abundant element in Earth's atmosphere?",
       choices: ["Oxygen","Hydrogen","Carbon","Helium"],
-      answer: "Oxygen"
+      answerIndex: 0
     },
     {
       question: "How many planets in our Solar System have moons?",
       choices: ["Nine","Six","Five","Three"],
-      answer: "Six"
+      answerIndex: 1
     },
     {
       question: "What planet in our Solar System has the most gravity?",
       choices: ["Mars","Mercury","Jupiter","Saturn"],
-      answer: "Jupiter"
+      answerIndex: 2
     },
     {
       question: "What is the hottest planet in our Solar System?",
       choices: ["Venus","Mercury","Saturn","Mars"],
-      answer: "Venus"
+      answerIndex: 0
     },
     {
       question: "Which planet in our solar system spins the fastest?",
       choices: ["Mercury","Venus","Jupiter","Earth"],
-      answer: "Jupiter"
+      answerIndex: 2
     },
   ],
 
